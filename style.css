@@ -1,0 +1,14 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  /* Center the content both vertically and horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  display: block;
+}
