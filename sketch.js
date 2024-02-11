@@ -1,14 +1,14 @@
-// Set the document title
-document.title = "Generative Art Template";
+// Set document title
+document.title = "Template";
 
-// Define canvas dimensions
+// Define canvas dimensions in pixels
 const canvasWidth = 620;
 const canvasHeight = 877;
 
 // Global variables
 let w, h, pg;
 let pointDensity = 4; // Export resolution for A4 paper at 300 DPI
-const seed = 123456789 * Math.random(); // Use $fx.rand() for fxhash
+const seed = 123456789 * Math.random(); // Replace with $fx.rand() for fxhash
 const copyright = `${document.title} by Patricio Isaías, 2024`;
 console.log(copyright);
 
@@ -19,7 +19,7 @@ function setup() {
   // Create off-screen graphics buffer with the same size as the canvas
   pg = createGraphics(canvasWidth, canvasHeight);
 
-  // Initialize shortcut variables for convenience
+  // Initialize shortcut variables
   w = pg.width;
   h = pg.height;
 
@@ -64,21 +64,27 @@ function keyPressed() {
   switch (key) {
     case "1":
       setPixelDensity(4, "A4");
-      saveImage("A4");
+      saveImage("A4", "tiff");
       break;
     case "2":
       setPixelDensity(5.66, "A3");
-      saveImage("A3");
+      saveImage("A3", "tiff");
       break;
     case "3":
       setPixelDensity(8, "A2");
-      saveImage("A2");
+      saveImage("A2", "tiff");
       break;
   }
 
   // Log the seed when the space bar key is pressed
   if (key === " ") {
     console.log(`Seed: ${seed}`);
+  }
+
+  // Save a jpg file for social media sharing
+  if (key === "s" || key === "S") {
+    setPixelDensity(2, "A4");
+    saveImage("IG", "jpg");
   }
 }
 
@@ -93,12 +99,11 @@ function setPixelDensity(newDensity, sizeName) {
   drawArt();
 }
 
-function saveImage(paperSize) {
-  const name = "Template";
-  const size = paperSize;
+function saveImage(size, format) {
+  const name = document.title;
   const date = `${nf(day(), 2)}.${nf(month(), 2)}.${year()}`;
   const time = `${nf(hour(), 2)}.${nf(minute(), 2)}.${nf(second(), 2)}`;
   const timeStamp = `${date}.${time}`;
-  const fileName = `${name}_${size}_${timeStamp}_${seed}.tiff`;
+  const fileName = `${name}_${size}_${timeStamp}_${seed}.${format}`;
   pg.save(fileName);
 }
